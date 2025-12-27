@@ -22,29 +22,28 @@ ws_history = sheet.worksheet("HistoryData")
 # Clear CurrentData before each scrape
 ws_current.clear()
 
-# Header row
+# Headers including seller info
 headers = [
     "id", "brand", "model", "name", "price", "year",
-    "tachometer", "region", "district",
-    "municipality", "url", "created_at", "scraped_at"
+    "tachometer", "region", "district", "municipality",
+    "url", "seller_id", "seller_name",
+    "created_at", "scraped_at"
 ]
 ws_current.append_row(headers)
 
-# Timestamp for scrape
+# Timestamp
 scraped_at = datetime.utcnow().isoformat()
 
-# Extract existing history IDs
-existing_history_ids = set()
+# Load existing history IDs (dedupe base)
 history_values = ws_history.col_values(1)
-if len(history_values) > 1:
-    existing_history_ids = set(history_values[1:])  # skip header
+existing_history_ids = set(v.strip() for v in history_values[1:])
 
-# Rows to append
+# Prepare rows
 current_rows = []
 new_history_rows = []
 
 for item in data:
-    car_id = str(item.get("id"))
+    car_id = str(item.get("id")).strip()
     row = [
         car_id,
         item.get("manufacturer_cb", {}).get("name"),
@@ -56,20 +55,21 @@ for item in data:
         item.get("locality", {}).get("region"),
         item.get("locality", {}).get("district"),
         item.get("locality", {}).get("municipality"),
-        f"https://www.sauto.cz/osobni/detail/{item.get('manufacturer_cb', {}).get('seo_name')}/{item.get('model_cb', {}).get('seo_name')}/{item.get('id')}",
+        f"https://www.sauto.cz/osobni/detail/{item.get('manufacturer_cb', {}).get('seo_name')}/{item.get('model_cb', {}).get('seo_name')}/{car_id}",
+        str(item.get("user", {}).get("id", "")),
+        item.get("premise", {}).get("name", ""),
         item.get("create_date"),
         scraped_at
     ]
-    
+
     current_rows.append(row)
 
-    # If not in history -> add to history
     if car_id not in existing_history_ids:
         new_history_rows.append(row)
 
 # Update CurrentData
 ws_current.append_rows(current_rows)
 
-# Append only new cars to HistoryData
+# Add only new rows to history
 if new_history_rows:
     ws_history.append_rows(new_history_rows)
