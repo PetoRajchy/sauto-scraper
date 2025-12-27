@@ -1,11 +1,11 @@
 {
-    "limit": "1000",
+    "limit": "500",
     "offset": "0",
-    "manufacturer_model_seo": "volkswagen",
-    "condition_seo": "nove,ojete,predvadeci",
+    "manufacturer_model_seo": "hyundai/tucson",
+    "condition_seo": "ojete",
     "category_id": "838",
     "operating_lease": "false",
     "price_from": "0",
-    "price_step": "50000",
-    "price_max": null
+    "price_step": "200000",
+    "price_max": "600000"
 }
