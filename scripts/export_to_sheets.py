@@ -56,8 +56,8 @@ for item in data:
         item.get("locality", {}).get("district"),
         item.get("locality", {}).get("municipality"),
         f"https://www.sauto.cz/osobni/detail/{item.get('manufacturer_cb', {}).get('seo_name')}/{item.get('model_cb', {}).get('seo_name')}/{car_id}",
-        str(item.get("user", {}).get("id", "")),
-        item.get("premise", {}).get("name", ""),
+        str(item.get("user", {}).get("id", "") if item.get("user") else ""),
+        item.get("premise", {}).get("name", "") if item.get("premise") else "",
         item.get("create_date"),
         scraped_at
     ]
