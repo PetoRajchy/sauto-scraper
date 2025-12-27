@@ -23,8 +23,39 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Scrapy
-        run: scrapy crawl sauto -O output.json
+            - name: Set params for Hyundai
+        run: |
+          echo '{
+            "limit": "1000",
+            "offset": "0",
+            "manufacturer_model_seo": "hyundai",
+            "condition_seo": "ojete,predvadeci",
+            "category_id": "838",
+            "operating_lease": "false",
+            "price_from": "0",
+            "price_step": "200000",
+            "price_max": "1500000"
+          }' > params.json
+
+      - name: Scrape Hyundai
+        run: scrapy crawl sauto -O output_hyundai.json
+
+      - name: Set params for Kia
+        run: |
+          echo '{
+            "limit": "1000",
+            "offset": "0",
+            "manufacturer_model_seo": "kia",
+            "condition_seo": "ojete,predvadeci",
+            "category_id": "838",
+            "operating_lease": "false",
+            "price_from": "0",
+            "price_step": "200000",
+            "price_max": "1500000"
+          }' > params.json
+
+      - name: Scrape Kia
+        run: scrapy crawl sauto -O output_kia.json
 
       - name: Install export dependencies
         run: pip install gspread google-auth
