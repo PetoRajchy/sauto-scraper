@@ -26,6 +26,16 @@ jobs:
       - name: Run Scrapy
         run: scrapy crawl sauto -O output.json
 
+      - name: Install export dependencies
+        run: pip install gspread google-auth
+
+      - name: Export results to Google Sheets
+        run: python scripts/export_to_sheets.py
+        env:
+          GOOGLE_SHEETS_CREDENTIALS: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS }}
+          SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
+        
+
       - name: Upload output file
         uses: actions/upload-artifact@v4
         with:
