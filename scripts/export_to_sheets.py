@@ -5,8 +5,15 @@ from google.oauth2.service_account import Credentials
 from datetime import datetime
 
 # Load scraped JSON
-with open("output.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
+data = []
+
+for file in ["output_hyundai.json", "output_kia.json"]:
+    if os.path.exists(file):
+        with open(file, "r", encoding="utf-8") as f:
+            try:
+                data.extend(json.load(f))
+            except:
+                print(f"⚠️ Invalid JSON or empty file: {file}")
 
 # Google Sheets authentication
 creds_info = json.loads(os.environ["GOOGLE_SHEETS_CREDENTIALS"])
