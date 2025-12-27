@@ -45,7 +45,7 @@ for item in data:
         item.get("locality", {}).get("region"),
         item.get("locality", {}).get("district"),
         item.get("locality", {}).get("municipality"),
-        f"https://www.sauto.cz/osobni/{item.get('manufacturer_cb', {}).get('seo_name')}/{item.get('model_cb', {}).get('seo_name')}/{item.get('id')}",
+        f"https://www.sauto.cz/osobni/detail/{item.get('manufacturer_cb', {}).get('seo_name')}/{item.get('model_cb', {}).get('seo_name')}/{item.get('id')}",
         item.get("create_date"),
         scraped_at
     ])
