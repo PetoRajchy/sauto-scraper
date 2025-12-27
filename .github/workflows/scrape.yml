@@ -27,7 +27,7 @@ jobs:
         run: scrapy crawl sauto -O output.json
 
       - name: Upload output file
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sauto-data
           path: output.json
