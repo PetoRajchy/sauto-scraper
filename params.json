@@ -1,11 +1,11 @@
 {
-    "limit": "500",
+    "limit": "1000",
     "offset": "0",
-    "manufacturer_model_seo": "hyundai/tucson",
-    "condition_seo": "ojete",
+    "manufacturer_model_seo": "hyundai,kia",
+    "condition_seo": "ojete,predvadeci",
     "category_id": "838",
     "operating_lease": "false",
     "price_from": "0",
     "price_step": "200000",
-    "price_max": "600000"
+    "price_max": "1500000"
 }
